@@ -1,6 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import tripRoutes from './routes/trips.js'
+import activityRoutes from './routes/trips.js'
+import destinationRoutes from './routes/trips.js'
+import destinationRoutes from './routes/trip_destinations.js'
 
 // create express app
 const app = express()
@@ -16,6 +19,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/trips', tripRoutes)
+app.use('/activities', activityRoutes )
+app.use('/destinations', destinationRoutes )
+app.use('/trips_destinations', destinationRoutes )
 
 
 
