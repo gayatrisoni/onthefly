@@ -20,7 +20,7 @@ const getTrips = async (req, res) => {
         const results = await pool.query('SELECT * FROM trips ORDER BY id ASC')
         res.status(200).json(results.rows)
     } catch (error) {
-        res.status(409).json({error: error.message})
+        res.status(500).json({error: error.message})
     }
 }
 
@@ -41,7 +41,7 @@ const updateTrip = async(req, res) => {
     const id = parseInt(req.params.id);
     const { title, description, img_url, num_days, start_date, end_date, total_cost } = req.body
     const results = await pool.query(
-      'UPDATE trips SET title = $1, description = $2, img_url = $3, num_days = $4, start_date = $5, end_date = $6, total_cost= $WHERE id = $8',
+      'UPDATE trips SET title = $1, description = $2, img_url = $3, num_days = $4, start_date = $5, end_date = $6, total_cost=$7 WHERE id = $8',
       [title, description, img_url, num_days, start_date, end_date, total_cost, id]
     )
     res.status(200).json(results.rows[0])
