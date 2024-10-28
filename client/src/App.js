@@ -10,7 +10,6 @@ import TripDetails from './pages/TripDetails'
 import { Link } from 'react-router-dom'
 import CreateActivity from './pages/CreateActivity';
 import AddToTrip from './pages/AddToTrip';
-import res from 'express/lib/response';
 
 
 
@@ -20,14 +19,8 @@ const App = () => {
   const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
-    const fetchTrips = async () => {
-      const response = await fetch('http://localhost:3001/trips')
-      const data = await response.json()
-      console.log(data);
-      setTrips(data)
-    }
 
-    fetchTrips()
+
   }, []);
 
   // Sets up routes
