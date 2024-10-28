@@ -19,9 +19,25 @@ const App = () => {
   const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
-
-
+    const fetchTrips = async() => {
+      const repsonse = await fetch('http://localhost:3001/trips')
+      const data =  await repsonse.json()
+      setTrips(data)
+    }
+    fetchTrips()
   }, []);
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      const response = await fetch('http://localhost:3001/destinations')
+      const data = await response.json()
+      console.log(data)
+      setDestinations(data)
+    }
+    fetchDestinations()
+  }, []);
+
+
 
   // Sets up routes
   let element = useRoutes([

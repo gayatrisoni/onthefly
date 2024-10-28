@@ -18,24 +18,49 @@ const CreateDestination = () => {
     }
     
     const createDestination = async (event) => {
-        
-        event.preventDefault();
-
-
         const addDestination = async () => {
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(destination)
+          }
+          
+          try {
+            const response = await fetch('http://localhost:3001/destinations', options)
+            console.log(response)
+            const data = await response.json()
+            console.log(data)
+            setDestination(data)
+            return data.id
 
- 
-        
+          } catch (error) {
+            console.error(error);
+            // Optionally display an error message to the user
+          }
+          
         }
-
+      
         const createTripDestination = async (destination_id) => {
-
-
-        
+          console.log(destination_id)
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({trip_id: trip_id, destination_id: destination_id})
+          }
+      
+          const response = await fetch('http://localhost:3001/trips_destinations', options)
+          const data = await response.json()
+          console.log(data)
+          return data
         }
+      
+        addDestination().then(res => createTripDestination(res)).then(res => window.location = '/')
+      }
 
-
-    }
 
     return (
         <div>

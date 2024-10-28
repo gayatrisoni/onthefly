@@ -6,8 +6,8 @@ const router = express.Router()
 router.get('/', DestinationsController.getDestinations)
 router.get('/:id', DestinationsController.getDestination)
 router.post('/', DestinationsController.createDestination)
-router.delete(':/id', DestinationsController.deleteDestination)
-router.patch(':/id', DestinationsController.updateDestination)
+router.delete('/:id', DestinationsController.deleteDestination)
+router.patch('/:id', DestinationsController.updateDestination)
 
 export default router
 

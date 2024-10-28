@@ -24,18 +24,42 @@ const EditTrip = ({data}) => {
     }
     
 
-    const updatePost = (event) => {
+    const updatePost = async (event) => {
         event.preventDefault();
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(post)
+        }
 
+        console.log(post)
 
-
+        try {
+            console.log(`${id}`)
+            const response = await fetch(`http://localhost:3001/trips/${id}`, options);
+            console.log(response)
+            if (!response.ok) {
+                throw new Error('Failed to update the post');
+            }
+    
+            // Redirect after successful deletion
+            window.location.href = '/';
+        } catch (error) {
+            console.error(error);
+            // Optionally display an error message to the user
+        }
     }
 
 
     const deletePost = (event) => {
         event.preventDefault();
-
-        
+        const options = {
+            method: 'DELETE'
+        }
+        fetch(`http://localhost:3001/trips/${id}`, options)
+        window.location.href = '/'  
     }
 
     return (
