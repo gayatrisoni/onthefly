@@ -4,6 +4,11 @@ import pool from '../config/database.js'
 const createTripDestination = async (req, res) => {
     try {
         const { trip_id, destination_id } = req.body;
+        
+        if (!trip_id || !destination_id) {
+            return res.status(400).json({ error: "trip_id and destination_id are required" });
+        }
+
 
         // Insert new record into trips_destinations
         const results = await pool.query(

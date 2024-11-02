@@ -13,16 +13,45 @@ const TripDetails = ({data}) => {
 
     useEffect(() => {
         const result = data.filter(item => item.id === parseInt(id))[0];
-        setPost({id: parseInt(result.id), title: result.title, description: result.description, img_url: result.img_url, num_days: parseInt(result.num_days), start_date: result.start_date.slice(0,10), end_date: result.end_date.slice(0,10), total_cost: result.total_cost});
-
-        const fetchActivities = async () => {
-
-
+        if (result) {
+            setPost({
+                id: parseInt(result.id),
+                title: result.title,
+                description: result.description,
+                img_url: result.img_url,
+                num_days: parseInt(result.num_days),
+                start_date: result.start_date.slice(0, 10),
+                end_date: result.end_date.slice(0, 10),
+                total_cost: result.total_cost
+            });
         }
 
-        const fetchDestinations = async () => {
+        const fetchActivities = async () => {
+            try {
+                const response = await fetch(`http://localhost:3001/activities/${id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setActivities(data);
+                } else {
+                    console.error("Failed to fetch activities:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching activities:", error);
+            }
+          }
 
-            
+        const fetchDestinations = async () => {
+            try {
+                const response = await fetch(`http://localhost:3001/trips_destinations/destinations/${id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setDestinations(data);
+                } else {
+                    console.error("Failed to fetch destinations:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching destinations:", error);
+            }
         }
 
 

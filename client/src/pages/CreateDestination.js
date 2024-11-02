@@ -18,48 +18,61 @@ const CreateDestination = () => {
     }
     
     const createDestination = async (event) => {
-        const addDestination = async () => {
-          const options = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(destination)
-          }
-          
-          try {
-            const response = await fetch('http://localhost:3001/destinations', options)
-            console.log(response)
-            const data = await response.json()
-            console.log(data)
-            setDestination(data)
-            return data.id
-
-          } catch (error) {
-            console.error(error);
-            // Optionally display an error message to the user
-          }
-          
+      const addDestination = async () => {
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(destination)
         }
-      
-        const createTripDestination = async (destination_id) => {
-          console.log(destination_id)
-          const options = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({trip_id: trip_id, destination_id: destination_id})
-          }
-      
-          const response = await fetch('http://localhost:3001/trips_destinations', options)
+        
+        try {
+          const response = await fetch('http://localhost:3001/destinations', options)
           const data = await response.json()
-          console.log(data)
-          return data
-        }
-      
-        addDestination().then(res => createTripDestination(res)).then(res => window.location = '/')
+          setDestination(data)
+          return data.id
+
+        } catch (error) {
+          console.error(error);
+          // Optionally display an error message to the user
+        }    
       }
+      
+      
+      const createTripDestination = async (destination_id) => {
+        console.log(destination_id)
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({trip_id: trip_id, destination_id: destination_id})
+        }
+        try {
+          const response = await fetch('http://localhost:3001/trips_destinations', options);
+          if (!response.ok) throw new Error("Failed to create trip destination");
+          const data = await response.json();
+          console.log("Trip destination created:", data);
+          return data;
+        } catch (error) {
+          console.error("Error in createTripDestination:", error);
+        }
+      }
+      
+      addDestination()
+        .then(destination_id => {
+            if (destination_id) {
+                return createTripDestination(destination_id);
+            } else {
+                console.error("Destination ID not found");
+            }
+        })
+        .then(() => {
+            
+            window.location = '/';
+        });
+    }
 
 
     return (

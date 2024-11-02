@@ -17,11 +17,24 @@ const CreateActivity = () => {
             }
         })
     }
+
+    console.log(activity)
     
     const createActivity = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
+      
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(activity)
+        }
 
-
+        console.log(options)
+      
+        fetch(`http://localhost:3001/activities/${trip_id}` , options)
+        window.location.href = '/'
     }
 
     return (
