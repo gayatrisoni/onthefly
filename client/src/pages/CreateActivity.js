@@ -4,31 +4,45 @@ import './CreateActivity.css'
 
 const CreateActivity = () => {
 
-    const [activity, setActivity] = useState({activity: "" })
+    // const [activity, setActivity] = useState({activity: " ", trip_id: 0, num_votes: 0} );
     const {trip_id} = useParams();
+    const [activity, setActivity] = useState(""); // Activity as a string
+    const num_votes = 0;
+   
 
+
+    // const handleChange = (event) => {
+    //     const {name, value} = event.target;
+    //     setActivity( (prev) => {
+    //         return {
+    //             ...prev,
+    //             [name]:value,
+    //         }
+    //     })
+    // }
 
     const handleChange = (event) => {
-        const {name, value} = event.target;
-        setActivity( (prev) => {
-            return {
-                ...prev,
-                [name]:value,
-            }
-        })
-    }
+        setActivity(event.target.value);
+    };
 
-    console.log(activity)
+
+    
     
     const createActivity = async (event) => {
         event.preventDefault()
+
+        const payload = {
+            activity,       // Activity as a string
+            trip_id, // Use the valid trip_id
+            num_votes       // Initial votes count
+        };
       
         const options = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(activity)
+          body: JSON.stringify(payload)
         }
 
         console.log(options)

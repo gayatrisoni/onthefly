@@ -4,8 +4,8 @@ const router = express.Router()
 
 
 router.get('/', ActivitiesController.getActivities)
-router.get('/:trip_id', ActivitiesController.getAactivity)
-router.post('/:trip_id', ActivitiesController.createActivity)
+router.get('/:id', ActivitiesController.getActivity)
+router.post('/:id', ActivitiesController.createActivity)
 router.delete('/:id', ActivitiesController.deleteActivity)
 router.patch('/:id', ActivitiesController.updateActivityLikes)
 

@@ -19,6 +19,7 @@ const createActivity = async(req, res) => {
 
 const getActivities = async(req, res) => {
     try {
+        
         // get all the activities from the activities table
         const results = await pool.query('SELECT * FROM activities ORDER BY id ASC' )
         // Respond with the all activities
@@ -29,17 +30,19 @@ const getActivities = async(req, res) => {
     }
 }
 
-const getAactivity = async(req, res) => {
+const getActivity = async(req, res) => {
     try {
         //extract trip_id from url parameters
         const trip_id = req.params.id
+
+        
 
          // Query the database for activities with the specified trip_id
         const results = await pool.query('SELECT * FROM activities WHERE trip_id = $1', [trip_id]);
 
         // If no activities are found, return a 404 status
         if (results.rows.length === 0) {
-            return res.status(404).json({ error: 'No activities found for the given trip_id' });
+            return res.status(404).json({ error: 'No activities found for the given trip_id' + req.params.json });
         }
         // Respond with the activities for the given trip_id
         res.status(200).json(results.rows);
@@ -95,7 +98,7 @@ const deleteActivity = async(req, res) => {
 export default {
     getActivities,
     createActivity,
-    getAactivity, 
+    getActivity, 
     updateActivityLikes,
     deleteActivity
 }

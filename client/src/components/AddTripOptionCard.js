@@ -11,10 +11,12 @@ const AddTripOptionCard = (props) =>  {
     const options = {
       method: 'POST',
       headers: {
-        'Content-Type' : 'applications/json'
+        'Content-Type' : 'application/json'
       },
-      body : JSON.stringify({trip_id: props.id, destination_id: destination_id})
+      body : JSON.stringify({trip_id: props.id, destination_id: Number(destination_id)})
     }
+
+    console.log(options)
 
     fetch('http://localhost:3001/trips_destinations', options)
     window.location.href = '/'

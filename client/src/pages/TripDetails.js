@@ -28,10 +28,12 @@ const TripDetails = ({data}) => {
 
         const fetchActivities = async () => {
             try {
+                console.log(id)
                 const response = await fetch(`http://localhost:3001/activities/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setActivities(data);
+                    console.log(data)
                 } else {
                     console.error("Failed to fetch activities:", response.statusText);
                 }
